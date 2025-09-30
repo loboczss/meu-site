@@ -1,13 +1,9 @@
 'use client';
 
 import React, { useState, useEffect } from 'react';
+import Image from 'next/image';
 
-// Ícones SVG inline
-const Plane = ({ size = 24, className = '' }) => (
-  <svg className={className} width={size} height={size} viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
-    <path d="M17.8 19.2L16 11l3.5-3.5C21 6 21.5 4 21 3c-1-.5-3 0-4.5 1.5L13 8 4.8 6.2c-.5-.1-.9.1-1.1.5l-.3.5c-.2.5-.1 1 .3 1.3L9 12l-2 3H4l-1 1 3 2 2 3 1-1v-3l3-2 3.5 5.3c.3.4.8.5 1.3.3l.5-.2c.4-.3.6-.7.5-1.2z" />
-  </svg>
-);
+/* ====== Ícones SVG inline (apenas os usados) ====== */
 const Globe = ({ size = 24, className = '' }) => (
   <svg className={className} width={size} height={size} viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
     <circle cx="12" cy="12" r="10" /><line x1="2" y1="12" x2="22" y2="12" />
@@ -25,13 +21,8 @@ const Clock = ({ size = 24, className = '' }) => (
   </svg>
 );
 const Star = ({ size = 24, className = '' }) => (
-  <svg className={className} width={size} height={size} viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
+  <svg className={className} width={size} height={size} viewBox="0 0 24 24" fill="currentColor" stroke="currentColor" strokeWidth="0">
     <polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2" />
-  </svg>
-);
-const CheckCircle = ({ size = 24, className = '' }) => (
-  <svg className={className} width={size} height={size} viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
-    <path d="M22 11.08V12a10 10 0 1 1-5.93-9.14" /><polyline points="22 4 12 14.01 9 11.01" />
   </svg>
 );
 const ArrowRight = ({ size = 24, className = '' }) => (
@@ -76,54 +67,63 @@ const MapPin = ({ size = 24, className = '' }) => (
   </svg>
 );
 
+/* ===== Imagens (fora do componente p/ deps do useEffect) ===== */
+const DESTINATIONS = [
+  {
+    name: 'Paris',
+    country: 'França',
+    image: 'https://images.unsplash.com/photo-1508057198894-247b23fe5ade?w=1600&q=80&auto=format&fit=crop',
+    desc: 'A cidade luz — clássica, romântica e inesquecível.',
+  },
+  {
+    name: 'Maldivas',
+    country: 'Oceano Índico',
+    image: 'https://images.unsplash.com/photo-1483683804023-6ccdb62f86ef?w=1200&q=80&auto=format&fit=crop',
+    desc: 'Água turquesa, bangalôs sobre o mar e zero pressa.',
+  },
+  {
+    name: 'Dubai',
+    country: 'Emirados Árabes',
+    image: 'https://images.unsplash.com/photo-1501594907352-04cda38ebc29?w=1600&q=80&auto=format&fit=crop',
+    desc: 'Arquitetura futurista, deserto e experiências 5★.',
+  },
+  {
+    name: 'Santorini',
+    country: 'Grécia',
+    image: 'https://images.unsplash.com/photo-1500530855697-b586d89ba3ee?w=1600&q=80&auto=format&fit=crop',
+    desc: 'Casas brancas, mar azul e pores do sol antológicos.',
+  },
+  {
+    name: 'Nova York',
+    country: 'Estados Unidos',
+    image: 'https://images.unsplash.com/photo-1534438327276-14e5300c3a48?w=1600&q=80&auto=format&fit=crop',
+    desc: 'A cidade que nunca dorme — e sempre surpreende.',
+  },
+];
+
 export default function EvasturLanding() {
   const [currentDestination, setCurrentDestination] = useState(0);
   const [currentTestimonial, setCurrentTestimonial] = useState(0);
 
   useEffect(() => {
-    const destInterval = setInterval(() => setCurrentDestination(prev => (prev + 1) % destinations.length), 4500);
-    const testInterval = setInterval(() => setCurrentTestimonial(prev => (prev + 1) % 3), 6000);
-    return () => { clearInterval(destInterval); clearInterval(testInterval); };
-  }, []);
-
-  // ===== Imagens novas — visuais premium =====
-  const destinations = [
-    {
-      name: 'Paris',
-      country: 'França',
-      image: 'https://images.unsplash.com/photo-1508057198894-247b23fe5ade?w=1600&q=80&auto=format&fit=crop',
-      desc: 'A cidade luz — clássica, romântica e inesquecível.'
-    },
-    {
-      name: 'Maldivas',
-      country: 'Oceano Índico',
-      image: 'https://images.unsplash.com/photo-1483683804023-6ccdb62f86ef?w=1200&q=80&auto=format&fit=crop',
-      desc: 'Água turquesa, bangalôs sobre o mar e zero pressa.'
-    },
-    {
-      name: 'Dubai',
-      country: 'Emirados Árabes',
-      image: 'https://images.unsplash.com/photo-1501594907352-04cda38ebc29?w=1600&q=80&auto=format&fit=crop',
-      desc: 'Arquitetura futurista, deserto e experiências 5★.'
-    },
-    {
-      name: 'Santorini',
-      country: 'Grécia',
-      image: 'https://images.unsplash.com/photo-1500530855697-b586d89ba3ee?w=1600&q=80&auto=format&fit=crop',
-      desc: 'Casas brancas, mar azul e pores do sol antológicos.'
-    },
-    {
-      name: 'Nova York',
-      country: 'Estados Unidos',
-      image: 'https://images.unsplash.com/photo-1534438327276-14e5300c3a48?w=1600&q=80&auto=format&fit=crop',
-      desc: 'A cidade que nunca dorme — e sempre surpreende.'
-    }
-  ];
+    const destInterval = setInterval(
+      () => setCurrentDestination((prev) => (prev + 1) % DESTINATIONS.length),
+      4500
+    );
+    const testInterval = setInterval(
+      () => setCurrentTestimonial((prev) => (prev + 1) % 3),
+      6000
+    );
+    return () => {
+      clearInterval(destInterval);
+      clearInterval(testInterval);
+    };
+  }, []); // arrays são imutáveis; sem dependências evita o warning
 
   return (
     <div className="bg-white text-gray-900 overflow-hidden">
       <style>{`
-        /* ===== Animações elegantes e responsivas ===== */
+        /* ===== Animações e utilitários ===== */
         @keyframes float { 0%,100%{transform:translateY(0)} 50%{transform:translateY(-18px)} }
         @keyframes slideIn { from{opacity:0;transform:translateY(40px)} to{opacity:1;transform:translateY(0)} }
         @keyframes fadeIn { from{opacity:0} to{opacity:1} }
@@ -132,14 +132,9 @@ export default function EvasturLanding() {
         @keyframes rotate { from{transform:rotate(0)} to{transform:rotate(360deg)} }
         @keyframes kenburns { 0%{transform:scale(1) translateZ(0)} 100%{transform:scale(1.12) translateZ(0)} }
         @keyframes glowPulse { 0%,100%{box-shadow:0 0 0 rgba(0,0,0,0)} 50%{box-shadow:0 20px 80px rgba(11,99,230,.25)} }
-        @keyframes halo {
-          0% {opacity:.65; filter:blur(24px); transform:scale(1);}
-          50%{opacity:.9; filter:blur(28px); transform:scale(1.06);}
-          100%{opacity:.65; filter:blur(24px); transform:scale(1);}
-        }
+        @keyframes halo { 0% {opacity:.65; filter:blur(24px); transform:scale(1);} 50%{opacity:.9; filter:blur(28px); transform:scale(1.06);} 100%{opacity:.65; filter:blur(24px); transform:scale(1);} }
         @keyframes tiltHover { 0%,100%{transform:rotateX(0) rotateY(0)} 50%{transform:rotateX(2deg) rotateY(-2deg)} }
 
-        /* Reduzir movimento para acessibilidade */
         @media (prefers-reduced-motion: reduce) {
           .animate-slide-in, .animate-fade-in, .animate-scale-in, .kenburns, .hover-lift, .logo-ring, .logo-halo { animation: none !important; transition: none !important; }
         }
@@ -150,10 +145,7 @@ export default function EvasturLanding() {
         .animate-scale-in { animation: scaleIn .6s ease-out forwards; opacity:0; }
 
         .gradient-blue-red { background: linear-gradient(135deg, #0b63e6 0%, #e0252b 100%); }
-        .gradient-text {
-          background: linear-gradient(135deg, #0b63e6 0%, #e0252b 100%);
-          -webkit-background-clip: text; -webkit-text-fill-color: transparent; background-clip: text;
-        }
+        .gradient-text { background: linear-gradient(135deg, #0b63e6 0%, #e0252b 100%); -webkit-background-clip: text; -webkit-text-fill-color: transparent; background-clip: text; }
         .shimmer-effect { background: linear-gradient(90deg, transparent, rgba(255,255,255,.85), transparent); background-size: 1000px 100%; animation: shimmer 2.5s infinite; }
 
         .hover-lift { transition: transform .5s cubic-bezier(.2,.85,.2,1), box-shadow .5s ease; }
@@ -165,60 +157,47 @@ export default function EvasturLanding() {
         .kenburns { animation: kenburns 10s ease-in-out forwards; }
         .tilt-sway { animation: tiltHover 8s ease-in-out infinite; transform-style: preserve-3d; }
 
-        /* ===== Logo com destaque elegante ===== */
+        /* Logo destacada */
         .logo-wrap { position: relative; display:inline-block; border-radius: 24px; overflow: visible; }
-        .logo-ring {
-          position:absolute; inset:-6px; border-radius: 28px;
-          background: conic-gradient(from 0deg, #0b63e6, #e0252b, #0b63e6);
-          filter: blur(10px); opacity:.45; animation: rotate 12s linear infinite, glowPulse 6s ease-in-out infinite;
-        }
-        .logo-inner {
-          position:relative; background:white; border-radius: 20px; padding:18px 22px;
-          box-shadow: 0 20px 60px rgba(16, 24, 40, .12);
-        }
-        .logo-halo {
-          content:""; position:absolute; inset:-30px; z-index:-1;
-          background: radial-gradient(60% 60% at 50% 50%, rgba(11,99,230,.25), rgba(224,37,43,.18) 60%, transparent 70%);
-          border-radius: 48px; animation: halo 6s ease-in-out infinite;
-        }
-        .logo-img { filter: drop-shadow(0 6px 20px rgba(11, 99, 230, .25)); transition: transform .6s ease; }
-        .logo-wrap:hover .logo-img { transform: scale(1.02); }
+        .logo-ring { position:absolute; inset:-6px; border-radius: 28px; background: conic-gradient(from 0deg, #0b63e6, #e0252b, #0b63e6); filter: blur(10px); opacity:.45; animation: rotate 12s linear infinite, glowPulse 6s ease-in-out infinite; }
+        .logo-inner { position:relative; background:white; border-radius: 20px; padding:18px 22px; box-shadow: 0 20px 60px rgba(16, 24, 40, .12); }
+        .logo-halo { content:""; position:absolute; inset:-30px; z-index:-1; background: radial-gradient(60% 60% at 50% 50%, rgba(11,99,230,.25), rgba(224,37,43,.18) 60%, transparent 70%); border-radius: 48px; animation: halo 6s ease-in-out infinite; }
 
-        /* Carrossel crossfade + slide sutil */
         .slide { transition: opacity .9s ease, transform .9s ease; }
         .slide-active { opacity:1; transform: translateX(0) scale(1); }
         .slide-inactive { opacity:0; transform: translateX(4%) scale(.98); }
 
-        /* Botões de pager */
         .dot { transition: all .3s ease; }
       `}</style>
 
-      {/* Hero */}
+      {/* ===== HERO ===== */}
       <section className="relative min-h-screen flex items-center overflow-hidden bg-gradient-to-br from-blue-50 via-white to-red-50">
-        {/* Blobs decorativos */}
+        {/* Blobs */}
         <div className="absolute -top-16 -left-20 w-[28rem] h-[28rem] bg-blue-200/60 rounded-full mix-blend-multiply blur-3xl opacity-30 animate-float" />
         <div className="absolute -bottom-24 -right-24 w-[30rem] h-[30rem] bg-red-200/60 rounded-full mix-blend-multiply blur-3xl opacity-30 animate-float" style={{ animationDelay: '2s' }} />
         <div className="absolute top-1/2 left-1/2 -translate-x-1/2 w-[24rem] h-[24rem] bg-purple-200/50 rounded-full mix-blend-multiply blur-3xl opacity-20 animate-float" style={{ animationDelay: '4s' }} />
 
         <div className="relative z-10 max-w-7xl mx-auto px-6 py-20 grid md:grid-cols-2 gap-12 items-center">
-          {/* Coluna esquerda */}
+          {/* Coluna esquerda: logo + copy + CTAs */}
           <div className="space-y-8">
-            {/* Logo com halo e anel animado */}
             <div className="animate-scale-in">
               <div className="logo-wrap tilt-sway">
                 <div className="logo-ring" aria-hidden />
                 <div className="logo-inner">
                   <div className="logo-halo" aria-hidden />
-                  <img
+                  {/* Logo local otimizada */}
+                  <Image
                     src="/evastur-logo.png"
                     alt="EVASTUR — sua viagem, nosso compromisso"
-                    className="logo-img w-80 h-auto"
+                    width={320}
+                    height={120}
+                    className="w-80 h-auto"
+                    priority
                   />
                 </div>
               </div>
             </div>
 
-            {/* Headline */}
             <div className="space-y-4">
               <h1 className="text-6xl md:text-7xl font-black leading-tight animate-slide-in" style={{ animationDelay: '0.15s' }}>
                 Viagens que
@@ -230,7 +209,6 @@ export default function EvasturLanding() {
               </p>
             </div>
 
-            {/* CTAs */}
             <div className="flex flex-col sm:flex-row gap-4 animate-slide-in" style={{ animationDelay: '0.45s' }}>
               <button className="group relative px-8 py-5 gradient-blue-red text-white rounded-2xl text-lg font-bold shadow-2xl hover-lift overflow-hidden">
                 <div className="absolute inset-0 shimmer-effect" />
@@ -241,16 +219,21 @@ export default function EvasturLanding() {
                 </span>
               </button>
 
-              <a href="https://wa.me/5599999999999" target="_blank" rel="noreferrer"
-                 className="px-8 py-5 bg-white border-2 border-gray-200 rounded-2xl text-lg font-bold hover-lift flex items-center justify-center gap-2 shadow-lg">
+              <a
+                href="https://wa.me/5599999999999"
+                target="_blank"
+                rel="noreferrer"
+                className="px-8 py-5 bg-white border-2 border-gray-200 rounded-2xl text-lg font-bold hover-lift flex items-center justify-center gap-2 shadow-lg"
+              >
+                {/* Ícone WhatsApp (SVG) */}
                 <svg className="w-6 h-6" fill="currentColor" viewBox="0 0 24 24" aria-hidden>
-                  <path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 005.683 1.448h.005c6.554 0 11.890-5.335 11.893-11.893a11.821 11.821 0 00-3.48-8.413Z"/>
+                  <path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347" />
+                  <path d="M12.051 21.785a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26C2.171 6.343 6.606 1.91 12.058 1.91a9.82 9.82 0 016.988 2.898 9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884Z" />
                 </svg>
                 WhatsApp
               </a>
             </div>
 
-            {/* Badges */}
             <div className="flex flex-wrap gap-4 animate-fade-in" style={{ animationDelay: '0.6s' }}>
               {[
                 { icon: Clock, text: 'Resposta em minutos' },
@@ -265,19 +248,22 @@ export default function EvasturLanding() {
             </div>
           </div>
 
-          {/* Carrossel de destinos — crossfade + Ken Burns */}
+          {/* Carrossel: crossfade + Ken Burns */}
           <div className="relative h-[620px] animate-scale-in" style={{ animationDelay: '0.25s' }}>
             <div className="absolute inset-0 bg-gradient-to-t from-white via-transparent to-transparent z-10 pointer-events-none" />
-            {destinations.map((dest, i) => (
+            {DESTINATIONS.map((dest, i) => (
               <div
                 key={i}
                 className={`absolute inset-0 slide ${currentDestination === i ? 'slide-active' : 'slide-inactive'}`}
               >
                 <div className="relative h-full rounded-3xl overflow-hidden shadow-2xl">
-                  <img
+                  <Image
                     src={dest.image}
                     alt={`${dest.name}, ${dest.country}`}
-                    className={`w-full h-full object-cover image-zoom ${currentDestination === i ? 'kenburns' : ''}`}
+                    fill
+                    sizes="(max-width: 768px) 100vw, 50vw"
+                    className={`object-cover image-zoom ${currentDestination === i ? 'kenburns' : ''}`}
+                    priority={i === 0}
                   />
                   <div className="absolute inset-0 bg-gradient-to-t from-black/70 via-black/25 to-transparent" />
                   <div className="absolute bottom-0 left-0 right-0 p-8 text-white">
@@ -291,12 +277,11 @@ export default function EvasturLanding() {
                 </div>
               </div>
             ))}
-            {/* Indicadores */}
             <div className="absolute bottom-4 left-1/2 -translate-x-1/2 flex gap-2 z-20">
-              {destinations.map((_, i) => (
+              {DESTINATIONS.map((_, i) => (
                 <button
                   key={i}
-                  aria-label={`Ir para ${destinations[i].name}`}
+                  aria-label={`Ir para ${DESTINATIONS[i].name}`}
                   onClick={() => setCurrentDestination(i)}
                   className={`dot rounded-full ${currentDestination === i ? 'w-12 h-3 bg-white' : 'w-3 h-3 bg-white/60'} `}
                 />
@@ -306,7 +291,7 @@ export default function EvasturLanding() {
         </div>
       </section>
 
-      {/* Galeria */}
+      {/* Galeria (Image otimizado) */}
       <section className="py-24 px-6 bg-gray-50">
         <div className="max-w-7xl mx-auto">
           <div className="text-center mb-16">
@@ -318,17 +303,23 @@ export default function EvasturLanding() {
 
           <div className="grid grid-cols-2 md:grid-cols-4 gap-4">
             {[
-              'https://images.unsplash.com/photo-1507525428034-b723cf961d3e?w=1200&q=80&auto=format&fit=crop', // Bali
-              'https://images.unsplash.com/photo-1483683804023-6ccdb62f86ef?w=1200&q=80&auto=format&fit=crop', // Tóquio
+              'https://images.unsplash.com/photo-1507525428034-b723cf961d3e?w=1200&q=80&auto=format&fit=crop',
+              'https://images.unsplash.com/photo-1483683804023-6ccdb62f86ef?w=1200&q=80&auto=format&fit=crop',
               'https://images.unsplash.com/photo-1758846182572-2bf2a35714d1?q=80&w=2071&auto=format&fit=crop',
-              'https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?w=1200&q=80&auto=format&fit=crop', // Londres
-              'https://images.unsplash.com/photo-1758754169722-620d36fcb76b?q=80&w=687&auto=format&fit=crop', // Rio de Janeiro
-              'https://images.unsplash.com/photo-1500534314209-a25ddb2bd429?w=1200&q=80&auto=format&fit=crop', // Islândia
-              'https://images.unsplash.com/photo-1469474968028-56623f02e42e?w=1200&q=80&auto=format&fit=crop', // Cairo
-              'https://images.unsplash.com/photo-1546539782-6fc531453083?w=1200&q=80&auto=format&fit=crop', // Machu Picchu
-            ].map((img, i) => (
+              'https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?w=1200&q=80&auto=format&fit=crop',
+              'https://images.unsplash.com/photo-1758754169722-620d36fcb76b?q=80&w=687&auto=format&fit=crop',
+              'https://images.unsplash.com/photo-1500534314209-a25ddb2bd429?w=1200&q=80&auto=format&fit=crop',
+              'https://images.unsplash.com/photo-1469474968028-56623f02e42e?w=1200&q=80&auto=format&fit=crop',
+              'https://images.unsplash.com/photo-1546539782-6fc531453083?w=1200&q=80&auto=format&fit=crop',
+            ].map((src, i) => (
               <div key={i} className="relative aspect-square overflow-hidden rounded-2xl shadow-lg hover-lift group">
-                <img src={img} alt={`Destino ${i + 1}`} className="w-full h-full object-cover image-zoom" />
+                <Image
+                  src={src}
+                  alt={`Destino ${i + 1}`}
+                  fill
+                  sizes="(max-width: 768px) 50vw, 25vw"
+                  className="object-cover image-zoom"
+                />
                 <div className="absolute inset-0 bg-gradient-to-t from-black/60 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300" />
                 <Camera className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 text-white opacity-0 group-hover:opacity-100 transition-opacity" size={40} />
               </div>
@@ -347,28 +338,28 @@ export default function EvasturLanding() {
             <p className="text-xl text-gray-600">Tecnologia e humanização em perfeita harmonia</p>
           </div>
 
-          <div className="grid md:grid-cols-3 gap-8">
-            {[
-              { icon: Clock, title: 'Velocidade Absurda', desc: 'Orçamentos personalizados em minutos. IA + especialistas humanos trabalhando por você.', color: 'blue' },
-              { icon: Shield, title: 'Proteção Total', desc: 'Seguros inclusos, documentação verificada e suporte 24/7. Viaje com tranquilidade absoluta.', color: 'red' },
-              { icon: Heart, title: 'Feito Para Você', desc: 'Roteiros customizados com base no seu perfil. Cada viagem é única, como você.', color: 'blue' },
-              { icon: TrendingUp, title: 'Melhor Custo-Benefício', desc: 'Monitoramos milhares de fontes para garantir o preço mais justo.', color: 'red' },
-              { icon: Users, title: 'Time de Experts', desc: 'Consultores que já rodaram o mundo e conhecem os segredos de cada lugar.', color: 'blue' },
-              { icon: Globe, title: 'Sem Fronteiras', desc: 'Do Nordeste à Patagônia. Do Caribe à Ásia. Onde você quiser ir.', color: 'red' }
-            ].map((feature, i) => (
-              <div key={i} className="bg-white rounded-3xl p-8 shadow-lg hover-lift border border-gray-100">
-                <div className={`w-16 h-16 rounded-2xl flex items-center justify-center mb-6 ${feature.color === 'blue' ? 'bg-blue-100' : 'bg-red-100'}`}>
-                  <feature.icon size={32} className={feature.color === 'blue' ? 'text-blue-600' : 'text-red-600'} />
-                </div>
-                <h3 className="text-2xl font-bold mb-3">{feature.title}</h3>
-                <p className="text-gray-600 leading-relaxed">{feature.desc}</p>
+        <div className="grid md:grid-cols-3 gap-8">
+          {[
+            { icon: Clock, title: 'Velocidade Absurda', desc: 'Orçamentos personalizados em minutos. IA + especialistas humanos trabalhando por você.', color: 'blue' },
+            { icon: Shield, title: 'Proteção Total', desc: 'Seguros inclusos, documentação verificada e suporte 24/7. Viaje com tranquilidade absoluta.', color: 'red' },
+            { icon: Heart, title: 'Feito Para Você', desc: 'Roteiros customizados com base no seu perfil. Cada viagem é única, como você.', color: 'blue' },
+            { icon: TrendingUp, title: 'Melhor Custo-Benefício', desc: 'Monitoramos milhares de fontes para garantir o preço mais justo.', color: 'red' },
+            { icon: Users, title: 'Time de Experts', desc: 'Consultores que já rodaram o mundo e conhecem os segredos de cada lugar.', color: 'blue' },
+            { icon: Globe, title: 'Sem Fronteiras', desc: 'Do Nordeste à Patagônia. Do Caribe à Ásia. Onde você quiser ir.', color: 'red' }
+          ].map((feature, i) => (
+            <div key={i} className="bg-white rounded-3xl p-8 shadow-lg hover-lift border border-gray-100">
+              <div className={`w-16 h-16 rounded-2xl flex items-center justify-center mb-6 ${feature.color === 'blue' ? 'bg-blue-100' : 'bg-red-100'}`}>
+                <feature.icon size={32} className={feature.color === 'blue' ? 'text-blue-600' : 'text-red-600'} />
               </div>
-            ))}
-          </div>
+              <h3 className="text-2xl font-bold mb-3">{feature.title}</h3>
+              <p className="text-gray-600 leading-relaxed">{feature.desc}</p>
+            </div>
+          ))}
+        </div>
         </div>
       </section>
 
-      {/* Depoimentos */}
+      {/* Depoimentos (aspas “ ” p/ evitar lint) */}
       <section className="py-24 px-6 bg-gradient-to-br from-blue-50 to-red-50">
         <div className="max-w-4xl mx-auto text-center">
           <h2 className="text-5xl font-black mb-16">
@@ -383,11 +374,19 @@ export default function EvasturLanding() {
             ].map((test, i) => (
               <div key={i} className={`absolute inset-0 transition-all duration-700 ${currentTestimonial === i ? 'opacity-100 scale-100' : 'opacity-0 scale-90'}`}>
                 <div className="bg-white rounded-3xl p-10 shadow-2xl">
-                  <img src={`https://i.pravatar.cc/120?img=${test.img}`} alt={test.name} className="w-24 h-24 rounded-full mx-auto mb-6 ring-4 ring-blue-200 shadow-xl" />
-                  <p className="text-2xl mb-6 text-gray-700 italic leading-relaxed">"{test.text}"</p>
+                  <Image
+                    src={`https://i.pravatar.cc/120?img=${test.img}`}
+                    alt={test.name}
+                    width={120}
+                    height={120}
+                    className="rounded-full mx-auto mb-6 ring-4 ring-blue-200 shadow-xl"
+                  />
+                  <p className="text-2xl mb-6 text-gray-700 italic leading-relaxed">“{test.text}”</p>
                   <p className="font-bold text-xl">{test.name}</p>
                   <p className="text-gray-500">{test.location}</p>
-                  <div className="flex justify-center gap-1 mt-4">{[1,2,3,4,5].map(star => (<Star key={star} size={20} className="fill-yellow-400 text-yellow-400" />))}</div>
+                  <div className="flex justify-center gap-1 mt-4">
+                    {[1,2,3,4,5].map((star) => (<Star key={star} size={20} className="text-yellow-400" />))}
+                  </div>
                 </div>
               </div>
             ))}
@@ -419,41 +418,14 @@ export default function EvasturLanding() {
         </div>
       </section>
 
-      {/* CTA Final */}
-      <section className="py-32 px-6 relative overflow-hidden">
-        <div className="absolute inset-0 bg-gradient-to-br from-blue-600 to-red-600 opacity-5" />
-        <div className="relative max-w-4xl mx-auto text-center">
-          <h2 className="text-6xl md:text-7xl font-black mb-6 leading-tight">
-            Sua próxima <span className="block gradient-text">aventura épica</span> começa aqui
-          </h2>
-          <p className="text-2xl text-gray-600 mb-12 max-w-2xl mx-auto">Orçamento personalizado em minutos. Sem compromisso. Sem pegadinhas.</p>
-
-          <div className="flex flex-col sm:flex-row gap-4 justify-center mb-8">
-            <button className="group relative px-12 py-6 gradient-blue-red text-white rounded-2xl text-xl font-bold shadow-2xl hover-lift overflow-hidden">
-              <div className="absolute inset-0 shimmer-effect" />
-              <span className="relative flex items-center justify-center gap-3">
-                <Sparkles size={24} />
-                Solicitar orçamento gratuito
-                <ArrowRight className="group-hover:translate-x-2 transition-transform" size={24} />
-              </span>
-            </button>
-          </div>
-
-          <div className="inline-flex items-center gap-2 bg-green-50 border border-green-200 px-6 py-3 rounded-full">
-            <div className="w-2 h-2 bg-green-500 rounded-full animate-pulse" />
-            <span className="text-sm font-semibold text-green-700">5 pessoas solicitaram orçamento na última hora</span>
-          </div>
-        </div>
-      </section>
-
-      {/* Footer — logo mais nítida */}
+      {/* Footer — logo nítida */}
       <footer className="border-t border-gray-200 bg-gray-50 py-12 px-6">
         <div className="max-w-7xl mx-auto text-center">
-          <div className="logo-wrap mb-6" style={{ transform: 'scale(.9)' }}>
+          <div className="mb-6 inline-block relative">
             <div className="logo-ring" aria-hidden />
             <div className="logo-inner">
               <div className="logo-halo" aria-hidden />
-              <img src="/evastur-logo.png" alt="EVASTUR" className="logo-img w-48 h-auto mx-auto" />
+              <Image src="/evastur-logo.png" alt="EVASTUR" width={192} height={72} className="mx-auto" />
             </div>
           </div>
           <p className="text-gray-600 mb-6">© 2025 EVASTUR. Transformando sonhos em passagens.</p>
