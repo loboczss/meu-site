@@ -2,7 +2,7 @@ import type { Metadata } from "next";
 import "./globals.css";
 
 export const metadata: Metadata = {
-  title: "Site do Juan",
+  title: "Evastur - Turismo e Viagens",
   description: "Next.js + Vercel",
 };
 
